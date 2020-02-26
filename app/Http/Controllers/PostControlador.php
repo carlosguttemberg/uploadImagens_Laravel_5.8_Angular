@@ -27,6 +27,7 @@ class PostControlador extends Controller
     public function store(Request $request)
     {
         $post = new Post();
+
         $path = $request->file('arquivo')->store('imagens', 'public');
         $post->nome      = $request->nome;
         $post->email     = $request->email;
@@ -35,7 +36,10 @@ class PostControlador extends Controller
         $post->arquivo   = $path;
         $post->likes     = 0;
         $post->mensagem  = $request->mensagem;
+
         $post->save();
+
+        return response($post, 200);
     }
 
     /**
