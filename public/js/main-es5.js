@@ -959,6 +959,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(PostService, [{
         key: "salvar",
         value: function salvar(post, file) {
+          var _this3 = this;
+
           var uploadData = new FormData();
           uploadData.append('nome', post.nome);
           uploadData.append('email', post.titulo);
@@ -966,8 +968,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           uploadData.append('subTitulo', post.subTitulo);
           uploadData.append('mensagem', post.mensagem);
           uploadData.append('arquivo', file);
-          this.http.post("/api/", uploadData).subscribe(function (event) {
+          this.http.post("/api/", uploadData, {
+            reportProgress: true,
+            observe: 'events'
+          }).subscribe(function (event) {
             if (event.type == _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].Response) {
+              // console.log(event);
+              var p = event.body;
+
+              _this3.posts.push(new _post__WEBPACK_IMPORTED_MODULE_2__["Post"](p.nome, p.titulo, p.subTitulo, p.email, p.mensagem, p.arquivo, p.id, p.likes));
+            }
+
+            if (event.type == _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].UploadProgress) {
+              console.log('UploadProgress');
               console.log(event);
             }
           });
@@ -1111,8 +1124,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         post: "post"
       },
       decls: 16,
-      vars: 3,
-      consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "src", "https://material.angular.io/assets/img/examples/shiba2.jpg", "alt", "Photo of a Shiba Inu"], ["mat-button", ""]],
+      vars: 4,
+      consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "alt", "Photo of a Shiba Inu", 3, "src"], ["mat-button", ""]],
       template: function PostComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-card", 0);
@@ -1175,7 +1188,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.post.subTitulo);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "/storage/", ctx.post.arquivo, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.post.mensagem, " ");
         }
