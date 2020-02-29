@@ -998,6 +998,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             p.likes = event.likes;
           });
         }
+      }, {
+        key: "apagar",
+        value: function apagar(id) {
+          var _this5 = this;
+
+          this.http.delete("/api/" + id).subscribe(function (event) {
+            // console.log(event);
+            var i = _this5.posts.findIndex(function (p) {
+              return p.id == id;
+            });
+
+            if (i >= 0) _this5.posts.splice(i, 1);
+          });
+        }
       }]);
 
       return PostService;
@@ -1168,6 +1182,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function like() {
           this.postService.like(this.post.id);
         }
+      }, {
+        key: "apagar",
+        value: function apagar() {
+          this.postService.apagar(this.post.id);
+        }
       }]);
 
       return PostComponent;
@@ -1185,7 +1204,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       },
       decls: 17,
       vars: 5,
-      consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "alt", "Photo of a Shiba Inu", 3, "src"], ["mat-button", "", "color", "primary", 3, "click"], ["mat-button", ""], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge", 4, "ngIf"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge"]],
+      consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "alt", "Photo of a Shiba Inu", 3, "src"], ["mat-button", "", "color", "primary", 3, "click"], ["mat-button", "", "color", "accent", 3, "click"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge", 4, "ngIf"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge"]],
       template: function PostComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-card", 0);
@@ -1234,7 +1253,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "button", 4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "SHARE");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PostComponent_Template_button_click_14_listener($event) {
+            return ctx.apagar();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "APAGAR");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 

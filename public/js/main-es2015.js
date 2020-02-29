@@ -496,6 +496,14 @@ class PostService {
             p.likes = event.likes;
         });
     }
+    apagar(id) {
+        this.http.delete("/api/" + id).subscribe((event) => {
+            // console.log(event);
+            let i = this.posts.findIndex((p) => p.id == id);
+            if (i >= 0)
+                this.posts.splice(i, 1);
+        });
+    }
 }
 PostService.ɵfac = function PostService_Factory(t) { return new (t || PostService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
 PostService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: PostService, factory: PostService.ɵfac, providedIn: 'root' });
@@ -581,9 +589,12 @@ class PostComponent {
     like() {
         this.postService.like(this.post.id);
     }
+    apagar() {
+        this.postService.apagar(this.post.id);
+    }
 }
 PostComponent.ɵfac = function PostComponent_Factory(t) { return new (t || PostComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_post_service__WEBPACK_IMPORTED_MODULE_1__["PostService"])); };
-PostComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PostComponent, selectors: [["app-post"]], inputs: { post: "post" }, decls: 17, vars: 5, consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "alt", "Photo of a Shiba Inu", 3, "src"], ["mat-button", "", "color", "primary", 3, "click"], ["mat-button", ""], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge", 4, "ngIf"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge"]], template: function PostComponent_Template(rf, ctx) { if (rf & 1) {
+PostComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PostComponent, selectors: [["app-post"]], inputs: { post: "post" }, decls: 17, vars: 5, consts: [["fxFlex", "", 1, "card"], ["mat-card-avatar", ""], ["mat-card-image", "", "alt", "Photo of a Shiba Inu", 3, "src"], ["mat-button", "", "color", "primary", 3, "click"], ["mat-button", "", "color", "accent", 3, "click"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge", 4, "ngIf"], ["color", "warn", "matBadgePosition", "above after", "matBadgeColor", "warn", "matBadgeOverlap", "false", 3, "matBadge"]], template: function PostComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "mat-card", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-card-header");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "div", 1);
@@ -606,7 +617,8 @@ PostComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComp
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13, "LIKE");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "button", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "SHARE");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PostComponent_Template_button_click_14_listener($event) { return ctx.apagar(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "APAGAR");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](16, PostComponent_mat_icon_16_Template, 2, 1, "mat-icon", 5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
